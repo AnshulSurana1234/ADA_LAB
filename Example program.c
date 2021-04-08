@@ -74,7 +74,7 @@ int main()
 	}
 	do
 	{
-		printf("Performing linear search(1) and binary search(2), 3-Exit\nEnter option\n");
+		printf("Performing 1. linear search 2. binary search, 3.Exit\nEnter option\n");
 		scanf("%d",&ch);
 		switch(ch)
 		{
