@@ -1,0 +1,111 @@
+#include<stdio.h>
+#define size 20
+#define true 1
+#define false 0
+int a[20][20],reach[20],n;
+int queue[size],visit[20],rear=-1,front=0;
+int n,s,adj[20][20],flag=0;
+void insertq(int v)
+{
+    queue[++rear]=v;
+}
+
+int deleteq()
+{
+    return(queue[front++]);
+}
+
+int qempty()
+{
+
+  if(rear<front)
+    return 1;
+
+  else
+    return 0;
+}
+
+void bfs(int v)
+{
+  int w;
+  visit[v]=1;
+  insertq(v);
+
+  while(!qempty())
+  {
+    v=deleteq();
+    for(w=1;w<=n;w++)
+
+       if((adj[v][w]==1) && (visit[w]==0))
+       {
+              visit[w]=1;
+              flag=1;
+              printf("v%d\t",w);
+              insertq(w);
+       }
+   }
+}
+void dfs(int v){
+     int i;
+     reach[v]=1;
+     for(i=1;i<=n;i++)
+         if(a[v][i]&&!reach[i]){
+            printf("\n%d->%d",v,i);
+            dfs(i);
+            }
+ }
+
+void main()
+{
+    int ch,v,w,i,j,count=0;
+    printf("1.Print all the nodes reachable from a given starting node in a digraph using BFS method\n2. Check whether a given graph is connected or not using DFS method.\n3.Exit\n");
+    printf("Your choice:");
+    scanf("%d",&ch);
+    do{
+        switch(ch){
+            case 1:printf("Enter the no.of vertices:\n");
+    scanf("%d",&n);
+    printf("Enter adjacency matrix:\n");
+    for(v=1;v<=n;v++)
+    {
+      for(w=1;w<=n;w++)
+       scanf("%d",&adj[v][w]);
+    }
+    printf("Enter the start vertex:");
+    scanf("%d",&s);
+    printf("Reachability of vertex %d\n",s);
+    for(v=1;v<=n;v++)
+            visit[v]=0;
+
+    bfs(s);
+
+    if(flag==0)
+    {
+      printf("No path found!!\n");
+    }
+    break;
+    case 2:printf("\nEnter no of vertices :");
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)
+        for(j=1;j<=n;j++){
+        reach[i]=0;
+        a[i][j]=0;
+        }
+    printf("\nEnter adjacency matrix : \n");
+    for(i=1;i<=n;i++)
+      for(j=1;j<=n;j++)
+        scanf("%d",&a[i][j]);
+    dfs(1);
+    for(i=1;i<=n;i++)
+       if(reach[i])
+         count++;
+    if(count==n)
+       printf("\nGraph is connected.");
+    else
+       printf("\nGraph is disconnected.");
+       break;
+        }
+        printf("\nYour Choice:");
+        scanf("%d",&ch);
+    }while(ch!=3);
+}
